@@ -102,11 +102,11 @@ class DoublyLinkedList {
     }
   }
 
-  forEach(callback) {
+  forEach(callback, selfReference=this) {
     let node = this._head();
     let index = 0;
     while (node._active) {
-      callback(node.element, index, this);
+      callback(node.element, index, selfReference);
       node = node.next;
       index += 1;
     }
