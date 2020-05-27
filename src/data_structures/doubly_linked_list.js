@@ -36,62 +36,36 @@ class DoublyLinkedList {
   }
 
   insertHead(element) {
-    if (this._head()._active) {
-      const prevHead = this._head();
-      const newNode = new DLLNode({
-        element,
-        next: prevHead,
-        prev: this._sentinel,
-      });
-      prevHead.prev = newNode;
-      this._sentinel.next = newNode;
-      return newNode;
-    } else {
-      const newNode = new DLLNode({
-        element,
-        next: this._sentinel,
-        prev: this._sentinel,
-      });
-      this._sentinel.next = newNode;
-      this._sentinel.prev = newNode;
-      return newNode;
-    }
+    const prevHead = this._head();
+    const newNode = new DLLNode({
+      element,
+      next: prevHead,
+      prev: this._sentinel,
+    });
+    prevHead.prev = newNode;
+    this._sentinel.next = newNode;
+    return newNode;
   }
 
   insertTail(element) {
-    if (this._tail()._active) {
-      const prev = this._tail();
-      const newNode = new DLLNode({ element, next: this._sentinel, prev });
-      prev.next = newNode;
-      this._sentinel.prev = newNode;
-      return newNode;
-    } else {
-      const newNode = new DLLNode({
-        element,
-        next: this._sentinel,
-        prev: this._sentinel,
-      });
-      this._sentinel.next = newNode;
-      this._sentinel.prev = newNode;
-      return newNode;
-    }
+    const prev = this._tail();
+    const newNode = new DLLNode({ element, next: this._sentinel, prev });
+    prev.next = newNode;
+    this._sentinel.prev = newNode;
+    return newNode;
   }
 
   removeHead() {
-    if (this._head()._active) {
-      let oldHead = this._head();
-      this._sentinel.next = oldHead.next;
-      oldHead.next.previous = this._sentinel;
-      return oldHead.remove();
+    const head = this._head();
+    if (head._active) {
+      return head.remove();
     }
   }
 
   removeTail() {
-    if (this._tail()._active) {
-      let oldTail = this._tail();
-      this._sentinel.prev = oldTail.prev;
-      oldTail.prev.next = this._sentinel;
-      return oldTail.remove();
+    const tail = this._tail();
+    if (tail._active) {
+      return tail.remove();
     }
   }
 
@@ -102,7 +76,7 @@ class DoublyLinkedList {
     }
   }
 
-  forEach(callback, selfReference=this) {
+  forEach(callback, selfReference = this) {
     let node = this._head();
     let index = 0;
     while (node._active) {
@@ -113,13 +87,9 @@ class DoublyLinkedList {
   }
 
   count() {
-    let i = 0;
-    let node = this._head();
-    while (node._active) {
-      i += 1;
-      node = node.next;
-    }
-    return i;
+    let total = 0;
+    const test = this.forEach(() => (total += 1));
+    return total;
   }
 }
 
